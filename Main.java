@@ -42,7 +42,13 @@ private static int readInt(Scanner scanner) {
                     break;
 
                 case 2:
-                    service.getAllTasks().forEach(System.out::println);
+                    System.out.println("--- TAREAS ---");
+
+                    if (service.getAllTasks().isEmpty()) {
+                        System.out.println("No hay tareas registradas.");
+                    } else {
+                        service.getAllTasks().forEach(System.out::println);
+                    }
                     break;
 
                 case 3:
@@ -62,10 +68,21 @@ private static int readInt(Scanner scanner) {
                     break;
 
                 case 4:
+                    if (!service.hasPendingTasks()) {
+                        System.out.println("AVISO: No hay tareas para eliminar.");
+                        break;
+                    }
+
+
                     System.out.print("ID: ");
                     int idDelete = readInt(input);
-                    service.deleteTask(idDelete);
-                    System.out.println("Tarea eliminada.");
+
+                    if (service.deleteTask(idDelete)) {
+                        System.out.println("Tarea eliminada.");
+                    } else {
+                        System.out.println("No existe una tarea con ese ID.");
+                    }
+
                     break;
 
                 case 5:
