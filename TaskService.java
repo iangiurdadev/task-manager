@@ -12,7 +12,7 @@ public class TaskService {
     }
 
     public List<Task> getAllTasks() {
-        return tasks;
+        return List.copyOf(tasks);
     }
 
     public boolean hasPendingTasks() {
@@ -26,25 +26,28 @@ public class TaskService {
     }
 
     public boolean completeTask(int id) {
-        for (Task task : tasks) {
-            if (task.getId() == id) {
-                task.setCompleted(true);
-                return true;
-            }
-        }
+        Task task = findById(id);
+        if (task == null){return false;}
 
-        return false;
+        task.complete();
+        return true;
     }
 
     public boolean deleteTask(int id) {
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getId() == id) {
-                tasks.remove(i);
-                return true;
+        Task task = findById(id);
+        if (task == null){return false;}
+
+        tasks.remove(task);
+        return true;
+    }
+
+    private Task findById(int id) {
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                return task;
             }
         }
-
-        return false;
+        return null;
     }
 
 
