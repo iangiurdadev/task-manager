@@ -15,16 +15,37 @@ public class TaskService {
         return tasks;
     }
 
-    public void completeTask(int id) {
-        for (Task t : tasks) {
-            if (t.id == id) {
-                t.completed = true;
-                return;
+    public boolean hasPendingTasks() {
+        for (Task task : tasks) {
+            if (!task.isCompleted()) {
+                return true;
             }
         }
+
+        return false;
     }
 
-    public void deleteTask(int id) {
-        tasks.removeIf(t -> t.id == id);
+    public boolean completeTask(int id) {
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                task.setCompleted(true);
+                return true;
+            }
+        }
+
+        return false;
     }
+
+    public boolean deleteTask(int id) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getId() == id) {
+                tasks.remove(i);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 }

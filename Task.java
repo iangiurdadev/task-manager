@@ -1,21 +1,30 @@
-import java.time.LocalDateTime;
-
 public class Task {
-    int id;
-    String title;
-    boolean completed;
-    LocalDateTime createdAt;
+    private int id;
+    private String title;
+    private boolean completed;
+
 
     public Task(int id, String title) {
         this.id = id;
         this.title = title;
         this.completed = false;
-        this.createdAt = LocalDateTime.now();
     }
 
     @Override
     public String toString() {
-    return id + " | " + title + " | " +
+        return id + " | " + title + " | " +
            (completed ? "COMPLETADA" : "PENDIENTE");
-           }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isCompleted() {
+    return completed;
+}
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 }

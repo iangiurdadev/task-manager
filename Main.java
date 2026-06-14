@@ -2,6 +2,19 @@ import java.util.Scanner;
 
 public class Main {
 
+private static int readInt(Scanner scanner) {
+    while (true) {
+        String input = scanner.nextLine();
+
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.print("ERROR: Debes ingresar un número: ");
+        }
+    }
+}
+
+
     public static void main(String[] args) {
 
         TaskService service = new TaskService();
@@ -17,7 +30,7 @@ public class Main {
             System.out.println("5. Salir");
 
             System.out.print("Opción: ");
-            int option = Integer.parseInt(input.nextLine());
+            int option = readInt(input);
 
             switch (option) {
 
@@ -33,15 +46,24 @@ public class Main {
                     break;
 
                 case 3:
+                    if (!service.hasPendingTasks()) {
+                        System.out.println("AVISO: No hay tareas pendientes para completar.");
+                        break;
+                    }
+
                     System.out.print("ID: ");
-                    int idComplete = Integer.parseInt(input.nextLine());
-                    service.completeTask(idComplete);
-                    System.out.println("Tarea completada.");
+                    int idComplete = readInt(input);
+
+                    if (service.completeTask(idComplete)) {
+                        System.out.println("Tarea completada.");
+                    } else {
+                        System.out.println("No existe una tarea con ese ID.");
+                    }
                     break;
 
                 case 4:
                     System.out.print("ID: ");
-                    int idDelete = Integer.parseInt(input.nextLine());
+                    int idDelete = readInt(input);
                     service.deleteTask(idDelete);
                     System.out.println("Tarea eliminada.");
                     break;
